@@ -1,6 +1,6 @@
 # Flow Event Scraper
 
-This project demonstrates how to use FCL to scrap event from flow block.
+This project demonstrates how to use FCL to scrap event from Flow block.
 
 ## Getting Started
 
@@ -16,21 +16,7 @@ In order for this demo to work, you have to setup the dependencies first:
 - **Start scraping flow transaction event**  
   Run `yarn start` at project root.
 
-## Diving into Demo
-
-All the demo cases are located in `./src/demo`. Each component is responsible for one example interaction with FCL.
-
-- **GetLatestBlock**: Get the information of the latest block produced on Flow blockchain
-- **GetAccount**: Get the account information for any specified account address
-- **ScriptOne**: Executes a simple script (read-only)
-- **ScriptTwo**: Executes a simple script (read-only) but with custom decoder for custom Cadence data structure
-- **Authenticate**: Handles sign in/out logic with FCL wallet
-- **UserInfo**: Subscribes to `fcl.currentUser()` and shows the connected user account information
-- **SendTransaction**: Sends a simple transaction to Flow. This requires the signatures from the connected user
-- **DeployContract**: Deploys a contract to the current user's code storage
-- **InteractWithContract**: Sends a simple transaction that executes a contract method. This requires the signatures from the connected user
-
-## Switch to Testnet
+### Switch to Testnet
 
 You can also test on Flow testnet instead of local emulator. To do so, simply update the FCL config inside `./src/config.ts`:
 
@@ -41,11 +27,11 @@ fcl.config()
   ...
 ```
 
-## Feature
+### Feature
 - result will be output into file `events.json` at project root. 
 - you can use `control + c` to stop task at any time and the report you get by then will still be recorded into file `events.json`.
 
-## Issue known
+### Known Issue
 If you encounter decode error like this:
 ```
 Error: Undefined Decoder Error: Type@nftType
@@ -68,3 +54,7 @@ fcl.config()
       return {}
     })
 ```
+
+### Tools Dependency
+- yarn v1.22.10
+- node v16.5.0
