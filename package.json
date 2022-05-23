@@ -5,7 +5,7 @@
   "scripts": {
     "ts": "node -r esbuild-register -r tsconfig-paths/register",
     "test": "jest",
-    "start": "node -r esbuild-register -r tsconfig-paths/register src/find-contract.ts",
+    "start": "node -r esbuild-register -r tsconfig-paths/register src/index.ts",
     "ts-check": "tsc --noEmit"
   },
   "devDependencies": {

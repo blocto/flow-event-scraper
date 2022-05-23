@@ -1,35 +1,12 @@
-import * as fcl from '@onflow/fcl'
 import exitHook from 'async-exit-hook'
 import { Block } from './types'
 import { sleep } from './sleep'
-import { getBlock, getCollection, getTransaction, handleEvent } from './util'
+import { getBlock, getBlockHeight, getCollection, getTransaction, handleEvent } from './util'
 import { record } from './record'
 import { getLastDatFromNowTimestamp } from './date'
-
-const URL_ACCESS_NODE = 'https://access-mainnet-beta.onflow.org'
-// const URL_NODE = 'https://access-testnet.onflow.org'
+import { setupFCL } from './config'
 
 type Report = Record<string, number>
-
-const setupFCL: () => Promise<void> = async () => {
-  fcl.config()
-    // .put("env", "testnet")
-    .put("accessNode.api", URL_ACCESS_NODE)
-    .put("decoder.Enum", (val: any) => {
-      const result: any = {
-        type: val.id
-      };
-
-      for (let i = 0; i < val.fields.length; i++) {
-        const field = val.fields[i];
-        result[field.name] = field.value;
-      }
-      return result;
-    })
-    .put("decoder.Type", (val: any) => {
-      return {}
-    })
-}
 
 let report: Report = {}
 
@@ -61,7 +38,7 @@ const handleBlock: (block: Block, startTime: Date, endTime: Date) => Promise<Blo
   }
 }
 
-;(async () => {
+  ; (async () => {
 
     exitHook(() => {
       record(JSON.stringify(report, null, '\t'))
@@ -69,7 +46,7 @@ const handleBlock: (block: Block, startTime: Date, endTime: Date) => Promise<Blo
 
     setupFCL()
 
-    const referencedBlock = await getBlock('f06a08c224df00dd55724c583348ea2a79cfc11e6fd95b658e69e69ba9d37e10')
+    const referencedBlock = await getBlockHeight(29831662)
     console.log(`💥 referencedBlock: ${JSON.stringify(referencedBlock, null, '\t')}`)
 
     try {
@@ -82,4 +59,4 @@ const handleBlock: (block: Block, startTime: Date, endTime: Date) => Promise<Blo
       console.log(`💥 error: ${JSON.stringify(error, null, '\t')}`)
     }
     record(JSON.stringify(report, null, '\t'))
-})()
+  })()
